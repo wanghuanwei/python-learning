@@ -1,13 +1,14 @@
 from tkinter import *
 import sendmail
 import tkinter.messagebox as messagebox
-
+import logging
 
 class SendTheMail(Frame):
     def __init__(self,master=None):
         Frame.__init__(self,master)
         self.pack()
         self.newWindow()
+        logging.info('init windows finished')
 
     def send(self):
         sender_var=self.sender_entry.get()  or 'testtttt'
@@ -16,6 +17,7 @@ class SendTheMail(Frame):
         title_var=self.title_entry.get()
         subject_var=self.subject_entry.get('1.0',END)
         sendmail.sendmail(sender_var,reciever_var,pwd_var,title_var,subject_var)
+        logging.info('send mail success')
         '''
         弹窗告警邮件发送成功
         点击确定后，清空所有输入框
@@ -26,6 +28,7 @@ class SendTheMail(Frame):
         self.pwd_entry.delete(0,END)
         self.title_entry.delete(0,END)
         self.subject_entry.delete('1.0', END)
+        logging.info('clear input success')
 
     def newWindow(self):
         self.sender_label=Label(text='发件人:')
@@ -60,6 +63,8 @@ class SendTheMail(Frame):
 
         self.send_button = Button(text='发送', command=self.send)
         self.send_button.place(x=270,y=550,height=30,width=60)
+
+logging.basicConfig(level= logging.INFO)
 
 mywin=SendTheMail()
 mywin.master.title('自定义的邮件发送端')
